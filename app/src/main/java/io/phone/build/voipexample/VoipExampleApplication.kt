@@ -10,20 +10,11 @@ import io.phone.build.voipsdkandroid.configuration.AuthAssistant
 import io.phone.build.voipsdkandroid.startAndroidPIL
 
 class VoipExampleApplication : Application() {
-    private val prefs by lazy {
-        PreferenceManager.getDefaultSharedPreferences(this)
-    }
 
     override fun onCreate() {
         super.onCreate()
 
         startAndroidPIL {
-            preferences = preferences.copy(
-                useApplicationProvidedRingtone = prefs.getBoolean(
-                    "use_application_provided_ringtone",
-                    false
-                )
-            )
 
             ApplicationSetup(
                 application = this@VoipExampleApplication,

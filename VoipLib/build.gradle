@@ -30,7 +30,7 @@ android {
         jvmTarget = '1.8'
     }
 }
-publishing {
+/*publishing {
     publications {
         maven(MavenPublication) {
             groupId = 'com.github.devmt-eng'
@@ -44,19 +44,19 @@ publishing {
     repositories {
         mavenLocal()
     }
-}
+}*/
 
-/*afterEvaluate {
+afterEvaluate {
     android.libraryVariants.each { variant->
         publishing.publications.create(variant.name, MavenPublication) {
             from components.findByName(variant.name)
 
             groupId = "com.github.devmt-eng"
             artifactId = "VoipSDKAndroid"
-            version= "1.0.1"
+            version= "1.0.9"
         }
     }
-}*/
+}
 
 task androidJavadocs(type: Javadoc){
     source = android.sourceSets.main.java.srcDirs
