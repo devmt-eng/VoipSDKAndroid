@@ -5,8 +5,8 @@ import android.content.pm.PackageManager
 import android.util.Log
 import io.phone.build.voipsdkandroid.configuration.ApplicationSetup
 
-class ApplicationSetup : Application() {
-    override fun onCreate() {
+class ApplicationSetup {
+    /*override fun onCreate() {
         super.onCreate()
 
         val callActivity = getMetaData("io.phone.build.voipsdkandroid.CALL_ACTIVITY")
@@ -49,5 +49,5 @@ class ApplicationSetup : Application() {
             e.printStackTrace()
             throw IllegalStateException("Provided activity classes are not found", e)
         }
-    }
+    }*/
 }
