@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <application
-        android:name="io.phone.build.voipexample.VoipExampleApplication"
+        android:name="io.phone.build.voipsdkandroid.AppicationSetup"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -11,6 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.VialerVoIPPlatformIntegrationLayer"
         tools:targetApi="31">
+
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
@@ -29,6 +30,13 @@
             android:name=".ui.call.IncomingCallActivity"
             android:launchMode="singleTask"
             android:exported="true" />
+        <meta-data
+            android:name="io.phone.build.voipsdkandroid.CALL_ACTIVITY"
+            android:value="io.phone.build.voipexample.ui.call.CallActivity" />
+
+        <meta-data
+            android:name="io.phone.build.voipsdkandroid.INCOMING_CALL_ACTIVITY"
+            android:value="io.phone.build.voipexample.ui.call.IncomingCallActivity" />
     </application>
 
 </manifest>

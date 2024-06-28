@@ -7,18 +7,18 @@ import io.phone.build.voipsdkandroid.di.di
 import io.phone.build.voiplib.config.Config
 import io.phone.build.voiplib.model.Call
 import io.phone.build.voiplib.model.RegistrationState
-import io.phone.build.voiplib.repository.LinphoneCoreInstanceManager
-import io.phone.build.voiplib.repository.call.controls.LinphoneSipActiveCallControlsRepository
-import io.phone.build.voiplib.repository.call.session.LinphoneSipSessionRepository
-import io.phone.build.voiplib.repository.registration.LinphoneSipRegisterRepository
+import io.phone.build.voiplib.repository.MiFoneCoreInstanceManager
+import io.phone.build.voiplib.repository.call.controls.MiFoneSipActiveCallControlsRepository
+import io.phone.build.voiplib.repository.call.session.MiFoneSipSessionRepository
+import io.phone.build.voiplib.repository.registration.MiFoneSipRegisterRepository
 
 typealias RegistrationCallback = (RegistrationState) -> Unit
 
 class VoIPLib {
-    private val sipRegisterRepository: LinphoneSipRegisterRepository by di.koin.inject()
-    private val sipCallControlsRepository: LinphoneSipActiveCallControlsRepository by di.koin.inject()
-    private val sipSessionRepository: LinphoneSipSessionRepository by di.koin.inject()
-    private val mifoneCoreInstanceManager: LinphoneCoreInstanceManager by di.koin.inject()
+    private val sipRegisterRepository: MiFoneSipRegisterRepository by di.koin.inject()
+    private val sipCallControlsRepository: MiFoneSipActiveCallControlsRepository by di.koin.inject()
+    private val sipSessionRepository: MiFoneSipSessionRepository by di.koin.inject()
+    private val mifoneCoreInstanceManager: MiFoneCoreInstanceManager by di.koin.inject()
 
     /**
      * This needs to be called whenever this library needs to initialize. Without it, no other calls

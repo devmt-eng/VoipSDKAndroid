@@ -2,9 +2,6 @@ package io.phone.build.voiplib.repository
 
 import android.content.Context
 import android.util.Log
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import org.linphone.core.*
 import org.linphone.core.GlobalState.Off
 import org.linphone.core.GlobalState.On
@@ -19,13 +16,13 @@ import java.io.FileOutputStream
 import java.util.*
 import org.linphone.core.Call as LinphoneCall
 
-internal class LinphoneCoreInstanceManager(private val context: Context): SimpleCoreListener {
+internal class MiFoneCoreInstanceManager(private val context: Context): SimpleCoreListener {
 
     internal val state = CoreState()
 
     private lateinit var voipLibConfig: Config
 
-    private var linphoneCore: Core? = null
+    private var mifoneCore: Core? = null
 
     internal val logging: LoggingService
         get() = Factory.instance().loggingService
@@ -33,7 +30,7 @@ internal class LinphoneCoreInstanceManager(private val context: Context): Simple
     val safeLinphoneCore: Core?
         get() {
             return if (state.initialized) {
-                linphoneCore
+                mifoneCore
             } else {
                 Log.e(TAG, "Trying to get mifone core while not possible", Exception())
                 null
@@ -52,7 +49,7 @@ internal class LinphoneCoreInstanceManager(private val context: Context): Simple
     fun initializeMiFone(config: Config) {
         this.voipLibConfig = config
 
-        if (linphoneCore != null) {
+        if (mifoneCore != null) {
             config.logListener?.onLogMessageWritten(LogLevel.WARNING, "Not initializing MiFone, already initialized.")
             return
         }
@@ -73,11 +70,11 @@ internal class LinphoneCoreInstanceManager(private val context: Context): Simple
 
         // voipLibConfig.logListener.let { logging.addListener(this) }
         val factory = Factory.instance()
-        this.linphoneCore = factory.createCore(null, null, context)
-        linphoneCore?.isKeepAliveEnabled = true
-        linphoneCore?.start()
-        linphoneCore?.removeListener(this)
-        linphoneCore?.addListener(this)
+        this.mifoneCore = factory.createCore(null, null, context)
+        mifoneCore?.isKeepAliveEnabled = true
+        mifoneCore?.start()
+        mifoneCore?.removeListener(this)
+        mifoneCore?.addListener(this)
         state.destroyed = false
     }
 
@@ -272,14 +269,14 @@ internal class LinphoneCoreInstanceManager(private val context: Context): Simple
     }*/
 
     companion object {
-        const val TAG = "VOIPLIB-LINPHONE"
+        const val TAG = "VOIPLIB-MiFone"
         var globalState: GlobalState = Off
         const val PUBLISH_DIRECTORY_NAME = "apl-resources"
     }
 
     inner class CoreState {
         var destroyed: Boolean = false
-        val initialized: Boolean get() = linphoneCore != null && !destroyed
+        val initialized: Boolean get() = mifoneCore != null && !destroyed
     }
 }
 

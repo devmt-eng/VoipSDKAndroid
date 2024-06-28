@@ -2,6 +2,7 @@ package io.phone.build.voipsdkandroid.android
 
 import android.telecom.DisconnectCause
 import android.telecom.TelecomManager
+import android.util.Log
 import io.phone.build.voipsdkandroid.PIL
 import io.phone.build.voipsdkandroid.call.Call
 import io.phone.build.voipsdkandroid.call.CallFactory
@@ -28,7 +29,7 @@ internal class PlatformIntegrator(
         }
 
         is OutgoingCallStarted -> {
-            print("OutgoingCallStarted RECEIVED")
+            Log.d("[LOGGER-CALL]","OutgoingCallStarted RECEIVED")
             if (androidCallFramework.connection == null) {
                 pil.writeLog("There is no connection object!", LogLevel.ERROR)
             }

@@ -56,13 +56,13 @@ class AudioManager internal constructor(
         // when it is really necessary, such as when the user is using the phone's speaker.
         if (route == AudioRoute.SPEAKER) {
             calls.forEach {
-                it.linphoneCall.isEchoLimiterEnabled = true
-                it.linphoneCall.isEchoCancellationEnabled = false
+                it.libCall.isEchoLimiterEnabled = true
+                it.libCall.isEchoCancellationEnabled = false
             }
         } else {
             calls.forEach {
-                it.linphoneCall.isEchoLimiterEnabled = false
-                it.linphoneCall.isEchoCancellationEnabled = true
+                it.libCall.isEchoLimiterEnabled = false
+                it.libCall.isEchoCancellationEnabled = true
             }
         }
 

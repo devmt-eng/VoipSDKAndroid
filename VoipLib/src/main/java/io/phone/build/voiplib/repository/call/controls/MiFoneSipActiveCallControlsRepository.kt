@@ -9,52 +9,52 @@ import io.phone.build.voipsdkandroid.logWithContext
 import io.phone.build.voipsdkandroid.logging.LogLevel
 import io.phone.build.voiplib.model.AttendedTransferSession
 import io.phone.build.voiplib.model.Call
-import io.phone.build.voiplib.repository.LinphoneCoreInstanceManager
+import io.phone.build.voiplib.repository.MiFoneCoreInstanceManager
 
-internal class LinphoneSipActiveCallControlsRepository(private val linphoneCoreInstanceManager: LinphoneCoreInstanceManager) {
+internal class MiFoneSipActiveCallControlsRepository(private val mifoneCoreInstanceManager: MiFoneCoreInstanceManager) {
 
     private val core: Core
-        get() = linphoneCoreInstanceManager.safeLinphoneCore!!
+        get() = mifoneCoreInstanceManager.safeLinphoneCore!!
 
     fun setMicrophone(on: Boolean) {
-        linphoneCoreInstanceManager.safeLinphoneCore?.isMicEnabled = on
+        mifoneCoreInstanceManager.safeLinphoneCore?.isMicEnabled = on
     }
 
     fun setHold(call: Call, on: Boolean) {
         if (on) {
-            call.linphoneCall.pause()
+            call.libCall.pause()
         } else {
-            call.linphoneCall.resume()
+            call.libCall.resume()
         }
     }
 
     fun isMicrophoneMuted(): Boolean {
-        val core = linphoneCoreInstanceManager.safeLinphoneCore ?: return false
+        val core = mifoneCoreInstanceManager.safeLinphoneCore ?: return false
 
         return !core.isMicEnabled
     }
 
     fun transferUnattended(call: Call, to: String) {
-        call.linphoneCall.transfer(to)
+        call.libCall.transfer(to)
     }
 
     fun finishAttendedTransfer(attendedTransferSession: AttendedTransferSession) {
-        attendedTransferSession.from.linphoneCall.transferToAnother(attendedTransferSession.to.linphoneCall)
+        attendedTransferSession.from.libCall.transferToAnother(attendedTransferSession.to.libCall)
     }
 
     fun pauseCall(call: Call) {
-        call.linphoneCall.pause()
+        call.libCall.pause()
     }
 
     fun resumeCall(call: Call) {
-        call.linphoneCall.resume()
+        call.libCall.resume()
     }
 
     fun sendDtmf(call: Call, dtmf: String) {
         if (dtmf.length == 1) {
-            call.linphoneCall.sendDtmf(dtmf[0])
+            call.libCall.sendDtmf(dtmf[0])
         } else {
-            call.linphoneCall.sendDtmfs(dtmf)
+            call.libCall.sendDtmfs(dtmf)
         }
     }
 
@@ -63,7 +63,7 @@ internal class LinphoneSipActiveCallControlsRepository(private val linphoneCoreI
             .disableHtmlEscaping()
             .setPrettyPrinting()
             .create()
-            .toJson(buildCallInfo(call.linphoneCall))
+            .toJson(buildCallInfo(call.libCall))
 
     internal fun routeAudioTo(types: List<AudioDevice.Type>, call: org.linphone.core.Call? = null) {
         if (core.callsNb == 0) {
@@ -179,8 +179,8 @@ internal class LinphoneSipActiveCallControlsRepository(private val linphoneCoreI
     )
 
     fun switchCall(from: Call, to: Call) {
-        from.linphoneCall.pause()
-        to.linphoneCall.resume()
+        from.libCall.pause()
+        to.libCall.resume()
     }
 }
 

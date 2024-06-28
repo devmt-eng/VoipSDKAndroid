@@ -35,9 +35,9 @@ publishing {
         maven(MavenPublication) {
             groupId = 'com.github.devmt-eng'
             artifactId = 'VoipSDKAndroid'
-            version = "1.0.2"
+            version = "1.0.3"
             pom {
-                description = '1.0.2'
+                description = '1.0.3'
             }
         }
     }

@@ -10,14 +10,14 @@ import io.phone.build.voipsdkandroid.logging.LogLevel.INFO
 import io.phone.build.voiplib.RegistrationCallback
 import io.phone.build.voiplib.model.RegistrationState.FAILED
 import io.phone.build.voiplib.model.RegistrationState.REGISTERED
-import io.phone.build.voiplib.repository.LinphoneCoreInstanceManager
+import io.phone.build.voiplib.repository.MiFoneCoreInstanceManager
 import io.phone.build.voiplib.repository.SimpleCoreListener
 import java.util.*
 import kotlin.concurrent.schedule
 
-internal class LinphoneSipRegisterRepository(
+internal class MiFoneSipRegisterRepository(
     private val pil: PIL,
-    private val linphoneCoreInstanceManager: LinphoneCoreInstanceManager,
+    private val mifoneCoreInstanceManager: MiFoneCoreInstanceManager,
 ) {
     private val registrationListener = RegistrationListener()
 
@@ -31,7 +31,7 @@ internal class LinphoneSipRegisterRepository(
 
     @Throws(CoreException::class)
     fun register(callback: RegistrationCallback) {
-        val core = linphoneCoreInstanceManager.safeLinphoneCore ?: run {
+        val core = mifoneCoreInstanceManager.safeLinphoneCore ?: run {
             log("Unable to register, no linphone core", ERROR)
             callback(FAILED)
             return
@@ -125,7 +125,7 @@ internal class LinphoneSipRegisterRepository(
         }
     )
 
-    fun unregister() = linphoneCoreInstanceManager.safeLinphoneCore?.apply {
+    fun unregister() =  mifoneCoreInstanceManager.safeLinphoneCore?.apply {
         clearAccounts()
         clearAllAuthInfo()
     }.also {
@@ -159,7 +159,7 @@ internal class LinphoneSipRegisterRepository(
         ) {
             log("State change: ${state?.name} - $message")
 
-            val callback = this@LinphoneSipRegisterRepository.callback ?: run {
+            val callback = this@MiFoneSipRegisterRepository.callback ?: run {
                 log("Callback not set so registration state change has not done anything.")
                 reset()
                 return
@@ -169,7 +169,7 @@ internal class LinphoneSipRegisterRepository(
             // all timers.
             if (state == RegistrationState.Ok) {
                 log("Successful, resetting timers.")
-                this@LinphoneSipRegisterRepository.callback = null
+                this@MiFoneSipRegisterRepository.callback = null
                 callback.invoke(REGISTERED)
                 reset()
                 return
@@ -184,7 +184,7 @@ internal class LinphoneSipRegisterRepository(
             }
 
             if (hasExceededTimeout(startTime)) {
-                this@LinphoneSipRegisterRepository.callback = null
+                this@MiFoneSipRegisterRepository.callback = null
                 unregister()
                 log("Registration timeout has been exceeded, registration failed.", ERROR)
                 callback.invoke(FAILED)

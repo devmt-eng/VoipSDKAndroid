@@ -7,13 +7,13 @@ import org.linphone.core.Reason
 import io.phone.build.voipsdkandroid.di.di
 import io.phone.build.voiplib.model.AttendedTransferSession
 import io.phone.build.voiplib.model.Call
-import io.phone.build.voiplib.repository.call.controls.LinphoneSipActiveCallControlsRepository
-import io.phone.build.voiplib.repository.call.session.LinphoneSipSessionRepository
+import io.phone.build.voiplib.repository.call.controls.MiFoneSipActiveCallControlsRepository
+import io.phone.build.voiplib.repository.call.session.MiFoneSipSessionRepository
 
 class Actions(private val call: Call) {
 
-    private val sipCallControlsRepository: LinphoneSipActiveCallControlsRepository by di.koin.inject()
-    private val sipSessionRepository: LinphoneSipSessionRepository by di.koin.inject()
+    private val sipCallControlsRepository: MiFoneSipActiveCallControlsRepository by di.koin.inject()
+    private val sipSessionRepository: MiFoneSipSessionRepository by di.koin.inject()
 
     /** --Control an incoming call-- */
     /**
@@ -53,25 +53,25 @@ class Actions(private val call: Call) {
     fun routeAudioToEarpiece(call: Call) =
         sipCallControlsRepository.routeAudioTo(
             arrayListOf(AudioDevice.Type.Earpiece),
-            call.linphoneCall,
+            call.libCall,
         )
 
     fun routeAudioToSpeaker(call: Call) =
         sipCallControlsRepository.routeAudioTo(
             arrayListOf(AudioDevice.Type.Speaker),
-            call.linphoneCall,
+            call.libCall,
         )
 
     fun routeAudioToBluetooth(call: Call) =
         sipCallControlsRepository.routeAudioTo(
             arrayListOf(AudioDevice.Type.Bluetooth),
-            call.linphoneCall,
+            call.libCall,
         )
 
     fun routeAudioToHeadset(call: Call) =
         sipCallControlsRepository.routeAudioTo(
             arrayListOf(AudioDevice.Type.Headphones, AudioDevice.Type.Headset),
-            call.linphoneCall,
+            call.libCall,
         )
 
     /**

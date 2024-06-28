@@ -3,25 +3,25 @@ package io.phone.build.voiplib.model
 import org.linphone.core.Call.Dir.Incoming
 import org.linphone.core.Call.Dir.Outgoing
 import io.phone.build.voiplib.repository.PreservedInviteData
-import org.linphone.core.Call as LinphoneCall
+import org.linphone.core.Call as MiFoneCall
 
-class Call(val linphoneCall: LinphoneCall) {
+class Call(val libCall: MiFoneCall) {
 
     val quality
-        get() = Quality(linphoneCall.averageQuality, linphoneCall.currentQuality)
+        get() = Quality(libCall.averageQuality, libCall.currentQuality)
 
     val state
-        get() = CallState.values().firstOrNull { it.name == linphoneCall.state.toString() }
+        get() = CallState.values().firstOrNull { it.name == libCall.state.toString() }
                     ?: CallState.Unknown
 
     val displayName
-        get() = linphoneCall.remoteAddress.displayName ?: ""
+        get() = libCall.remoteAddress.displayName ?: ""
 
     val phoneNumber
-        get() = linphoneCall.remoteAddress.username ?: ""
+        get() = libCall.remoteAddress.username ?: ""
 
     val duration
-        get() = linphoneCall.duration
+        get() = libCall.duration
 
     /**
      * Check if this is a missed call, this will likely not be valid until the call has been
@@ -30,12 +30,12 @@ class Call(val linphoneCall: LinphoneCall) {
      */
     val wasMissed: Boolean
         get() = try {
-            val log = linphoneCall.callLog
+            val log = libCall.callLog
 
             val missedStatuses = arrayOf(
-                LinphoneCall.Status.Missed,
-                LinphoneCall.Status.Aborted,
-                LinphoneCall.Status.EarlyAborted,
+                MiFoneCall.Status.Missed,
+                MiFoneCall.Status.Aborted,
+                MiFoneCall.Status.EarlyAborted,
             )
 
             log.dir == Incoming && missedStatuses.contains(log.status)
@@ -44,17 +44,17 @@ class Call(val linphoneCall: LinphoneCall) {
         }
 
     val reason
-        get() = linphoneCall.reason.name
+        get() = libCall.reason.name
 
     val callId: String
         get() = try {
-            linphoneCall.callLog.callId ?: ""
+            libCall.callLog.callId ?: ""
         } catch (e: NullPointerException) {
             "unknown"
         }
 
     val direction
-        get() = when (linphoneCall.callLog.dir) {
+        get() = when (libCall.callLog.dir) {
             Outgoing -> Direction.OUTGOING
             Incoming -> Direction.INCOMING
             null -> Direction.INCOMING
@@ -62,14 +62,14 @@ class Call(val linphoneCall: LinphoneCall) {
 
     val remotePartyId: String
         get() {
-            val userData = linphoneCall.userData as? PreservedInviteData ?: return ""
+            val userData = libCall.userData as? PreservedInviteData ?: return ""
 
             return userData.remotePartyId ?: ""
         }
 
     val pAssertedIdentity: String
         get() {
-            val userData = linphoneCall.userData as? PreservedInviteData ?: return ""
+            val userData = libCall.userData as? PreservedInviteData ?: return ""
 
             return userData.pAssertedIdentity ?: ""
         }

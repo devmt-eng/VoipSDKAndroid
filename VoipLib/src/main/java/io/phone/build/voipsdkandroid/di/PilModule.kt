@@ -23,10 +23,10 @@ import io.phone.build.voipsdkandroid.telecom.AndroidCallFramework
 import io.phone.build.voipsdkandroid.telecom.Connection
 import io.phone.build.voiplib.VoIPLib
 import io.phone.build.voiplib.repository.Dns
-import io.phone.build.voiplib.repository.LinphoneCoreInstanceManager
-import io.phone.build.voiplib.repository.call.controls.LinphoneSipActiveCallControlsRepository
-import io.phone.build.voiplib.repository.call.session.LinphoneSipSessionRepository
-import io.phone.build.voiplib.repository.registration.LinphoneSipRegisterRepository
+import io.phone.build.voiplib.repository.MiFoneCoreInstanceManager
+import io.phone.build.voiplib.repository.call.controls.MiFoneSipActiveCallControlsRepository
+import io.phone.build.voiplib.repository.call.session.MiFoneSipSessionRepository
+import io.phone.build.voiplib.repository.registration.MiFoneSipRegisterRepository
 
 fun getModules() = listOf(pilModule)
 
@@ -94,9 +94,9 @@ val pilModule = module {
     }
 
     single { Dns(get()) }
-    single { LinphoneCoreInstanceManager(get()) }
-    single { LinphoneSipRegisterRepository(get(), get()) }
+    single { MiFoneCoreInstanceManager(get()) }
+    single { MiFoneSipRegisterRepository(get(), get()) }
 
-    single { LinphoneSipActiveCallControlsRepository(get()) }
-    single { LinphoneSipSessionRepository(get(), get()) }
+    single { MiFoneSipActiveCallControlsRepository(get()) }
+    single { MiFoneSipSessionRepository(get(), get()) }
 }

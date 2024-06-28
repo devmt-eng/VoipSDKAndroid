@@ -5,14 +5,14 @@ import org.linphone.core.CoreException
 import org.linphone.core.Reason
 import io.phone.build.voipsdkandroid.PIL
 import io.phone.build.voiplib.model.Call
-import io.phone.build.voiplib.repository.LinphoneCoreInstanceManager
+import io.phone.build.voiplib.repository.MiFoneCoreInstanceManager
 import org.linphone.core.Call as LinphoneCall
 
-internal class LinphoneSipSessionRepository(private val pil: PIL, private val linphoneCoreInstanceManager: LinphoneCoreInstanceManager) {
+internal class MiFoneSipSessionRepository(private val pil: PIL, private val mifoneCoreInstanceManager: MiFoneCoreInstanceManager) {
 
     fun acceptIncoming(call: Call) {
         try {
-            call.linphoneCall.accept()
+            call.libCall.accept()
         } catch (e: CoreException) {
             e.printStackTrace()
         }
@@ -20,15 +20,15 @@ internal class LinphoneSipSessionRepository(private val pil: PIL, private val li
 
     fun declineIncoming(call: Call, reason: Reason) {
         try {
-            call.linphoneCall.decline(reason)
+            call.libCall.decline(reason)
         } catch (e: CoreException) {
             e.printStackTrace()
         }
     }
 
     fun callTo(number: String): Call {
-        if (!linphoneCoreInstanceManager.state.initialized) {
-            throw Exception("Linphone is not ready")
+        if (!mifoneCoreInstanceManager.state.initialized) {
+            throw Exception("MiFone is not ready")
         }
 
         if (number.isEmpty()) {
@@ -43,7 +43,7 @@ internal class LinphoneSipSessionRepository(private val pil: PIL, private val li
     }
 
     private fun callTo(connectionParameters: ConnectionParameters) : LinphoneCall? {
-        val core = linphoneCoreInstanceManager.safeLinphoneCore ?: return null
+        val core = mifoneCoreInstanceManager.safeLinphoneCore ?: return null
 
         val address: Address = try {
             core.interpretUrl(connectionParameters.asUrl())!!
@@ -60,9 +60,9 @@ internal class LinphoneSipSessionRepository(private val pil: PIL, private val li
     }
 
     fun end(call: Call) {
-        call.linphoneCall.terminate()
-        if (linphoneCoreInstanceManager.safeLinphoneCore?.isInConference == true) {
-            linphoneCoreInstanceManager.safeLinphoneCore?.terminateConference()
+        call.libCall.terminate()
+        if (mifoneCoreInstanceManager.safeLinphoneCore?.isInConference == true) {
+            mifoneCoreInstanceManager.safeLinphoneCore?.terminateConference()
         }
     }
 

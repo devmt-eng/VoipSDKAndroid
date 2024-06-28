@@ -1,6 +1,5 @@
 package io.phone.build.voipsdkandroid.configuration
 
-import android.app.Activity
 import android.app.Application
 import android.app.PendingIntent
 import io.phone.build.voiplib.R
@@ -72,5 +71,5 @@ data class ApplicationSetup(
         ALWAYS
     }
 
-    data class Activities(val call: Class<out Activity>?, val incomingCall: Class<out Activity>?)
+    data class Activities(val call: Class<*>, val incomingCall: Class<*>)
 }

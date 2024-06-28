@@ -28,7 +28,6 @@ class Builder internal constructor() {
         setupApplicationBackgroundListeners(pil)
         pil.preferences = this.preferences
         licesce?.let { pil.licenceConfig = it }
-        /*auth?.let { pil.auth = it }*/
 
         return pil
     }

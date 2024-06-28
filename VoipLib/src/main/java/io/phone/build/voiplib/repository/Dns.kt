@@ -6,7 +6,7 @@ import android.net.ConnectivityManager
 class Dns(private val context: Context) {
 
     /**
-     * Linphone sometimes fails to resolve local dns so we will prioritise some public dns
+     * Mifone sometimes fails to resolve local dns so we will prioritise some public dns
      * and then fall-back to the local dns servers if needed (e.g. if the user blocks all remote
      * dns).
      */
