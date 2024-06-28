@@ -21,3 +21,21 @@
 #-renamesourcefileattribute SourceFile
 -keep class io.phone.build.voiplib.repository.** { *; }
 -keep interface io.phone.build.voiplib.repository.** { *; }
+# Koin
+-keep class org.koin.** { *; }
+-keep class com.github.hieujames.** { *; }
+-keepclassmembers class io.phone.build.voipsdkandroid.** { *; }
+
+# Bảo toàn các class có thể được sử dụng thông qua reflection
+-keepclasseswithmembers class * {
+    @org.koin.core.annotation.KoinInternal <methods>;
+}
+
+# Bảo toàn annotations và metadata của Koin
+-keepattributes RuntimeVisibleAnnotations
+-keepattributes AnnotationDefault
+-keepattributes InnerClasses
+
+# Tắt optimization và shrinkage cho Koin
+-dontoptimize
+-dontshrink
