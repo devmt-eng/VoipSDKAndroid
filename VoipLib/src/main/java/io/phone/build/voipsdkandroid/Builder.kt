@@ -3,18 +3,14 @@ package io.phone.build.voipsdkandroid
 import androidx.lifecycle.ProcessLifecycleOwner
 import io.phone.build.voipsdkandroid.android.ApplicationStateListener
 import io.phone.build.voipsdkandroid.configuration.ApplicationSetup
-import io.phone.build.voipsdkandroid.configuration.Auth
 import io.phone.build.voipsdkandroid.configuration.AuthAssistant
 import io.phone.build.voipsdkandroid.configuration.Preferences
 import io.phone.build.voipsdkandroid.di.initPilKoin
 import io.phone.build.voipsdkandroid.exception.PILAlreadyInitializedException
-import io.phone.build.voipsdkandroid.service.LicenceRequest
-import io.phone.build.voipsdkandroid.service.api
 
 class Builder internal constructor() {
 
     var preferences: Preferences = Preferences.DEFAULT
-    var licesce: AuthAssistant? = null
 
     internal fun start(applicationSetup: ApplicationSetup): PIL {
         if (PIL.isInitialized) {
@@ -27,7 +23,6 @@ class Builder internal constructor() {
 
         setupApplicationBackgroundListeners(pil)
         pil.preferences = this.preferences
-        licesce?.let { pil.licenceConfig = it }
 
         return pil
     }

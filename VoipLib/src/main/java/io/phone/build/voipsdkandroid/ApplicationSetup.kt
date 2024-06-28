@@ -1,14 +1,11 @@
 package io.phone.build.voipsdkandroid
 
 import android.app.Application
-import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
-import android.preference.PreferenceManager
 import android.util.Log
 import io.phone.build.voipsdkandroid.configuration.ApplicationSetup
-import io.phone.build.voipsdkandroid.configuration.Preferences
 
-class AppicationSetup : Application() {
+class ApplicationSetup : Application() {
     override fun onCreate() {
         super.onCreate()
 
@@ -36,7 +33,7 @@ class AppicationSetup : Application() {
             startAndroidPIL {
 
                 ApplicationSetup(
-                    application = this@AppicationSetup,
+                    application = this@ApplicationSetup,
                     activities = ApplicationSetup.Activities(
                         call = callActivityClass,
                         incomingCall = incomingCallActivityClass
