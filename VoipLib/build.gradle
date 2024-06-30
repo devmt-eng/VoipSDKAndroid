@@ -53,8 +53,7 @@ publishing {
         myPublish (MavenPublication) {
             groupId "com.github.devmt-eng"
             artifactId "VoipSDKAndroid"
-            version "1.0.13"
-            artifact "$buildDir/outputs/aar/VoipLib-release.aar"
+            version "1.0.14"
             pom.withXml {
                 def dependencies = asNode().appendNode('dependencies')
                 configurations.getByName("releaseCompileClasspath").getResolvedConfiguration().getFirstLevelModuleDependencies().each {
@@ -66,14 +65,6 @@ publishing {
             }
         }
     }
-
-    repositories {
-        mavenLocal()
-    }
-}
-
-tasks.named('publishMyPublishPublicationToMavenLocal').configure {
-    dependsOn tasks.named('bundleReleaseAar')
 }
 
 task androidJavadocs(type: Javadoc){
