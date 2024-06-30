@@ -32,37 +32,15 @@ android {
 
 }
 
-/*publishing {
-    publications {
-        maven(MavenPublication) {
-            groupId = 'com.github.devmt-eng'
-            artifactId = 'VoipSDKAndroid'
-            version = "1.0.12"
-            pom {
-                description = '1.0.12'
-            }
-        }
-    }
-    repositories {
-        mavenLocal()
-    }
-}*/
-
 publishing {
     publications {
-        myPublish (MavenPublication) {
+        release(MavenPublication) {
+            afterEvaluate {
+                from components.release
+            }
             groupId "com.github.devmt-eng"
             artifactId "VoipSDKAndroid"
-            version "1.0.14"
-            pom.withXml {
-                def dependencies = asNode().appendNode('dependencies')
-                configurations.getByName("releaseCompileClasspath").getResolvedConfiguration().getFirstLevelModuleDependencies().each {
-                    def dependency = dependencies.appendNode('dependency')
-                    dependency.appendNode('groupId', it.moduleGroup)
-                    dependency.appendNode('artifactId', it.moduleName)
-                    dependency.appendNode('version', it.moduleVersion)
-                }
-            }
+            version "1.0.15"
         }
     }
 }
