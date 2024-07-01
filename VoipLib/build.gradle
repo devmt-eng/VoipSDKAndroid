@@ -36,45 +36,17 @@ android {
     }
 }
 
-afterEvaluate{
-    publishing{
-        publications{
-            release(MavenPublication){
-                from components.release
-
-                groupId='com.github.devmt-eng'
-                artifactId = 'VoipSDKAndroid'
-                version = '1.0.26'
-            }
-        }
-    }
-}
-
-/*afterEvaluate {
+afterEvaluate {
     android.libraryVariants.each { variant->
         publishing.publications.create(variant.name, MavenPublication) {
             from components.findByName(variant.name)
 
             groupId = "com.github.devmt-eng"
             artifactId = "VoipSDKAndroid"
-            version= "1.0.24"
+            version= "1.0.27"
         }
     }
-}*/
-
-/*publishing {
-    publications {
-        release(MavenPublication) {
-            afterEvaluate {
-                from components.release
-            }
-            groupId "com.github.devmt-eng"
-            artifactId "VoipSDKAndroid"
-            version "1.0.18"
-
-        }
-    }
-}*/
+}
 
 task androidJavadocs(type: Javadoc){
     source = android.sourceSets.main.java.srcDirs
