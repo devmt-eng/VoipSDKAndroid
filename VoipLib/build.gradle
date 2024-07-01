@@ -48,7 +48,7 @@ afterEvaluate {
                 url = uri("https://maven.pkg.github.com/devmt-eng/VoipSDKAndroid")
                 credentials {
                     username = "devmt-eng"
-                    password = "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"
+                    password = "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"
                 }
             }
         }
