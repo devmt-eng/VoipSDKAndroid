@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     id("maven-publish")
+    id("com.palantir.git-version") version("3.0.0")
 }
 
 android {
@@ -13,6 +14,10 @@ android {
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
+
+        afterEvaluate {
+            createVersionInformation(defaultConfig)
+        }
     }
 
     buildTypes {
@@ -29,10 +34,22 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-
 }
 
-publishing {
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.findByName("release")
+
+                groupId = "com.github.devmt-eng"
+                artifactId = "VoipSDKAndroid"
+            }
+        }
+    }
+}
+
+/*publishing {
     publications {
         release(MavenPublication) {
             afterEvaluate {
@@ -44,7 +61,7 @@ publishing {
 
         }
     }
-}
+}*/
 
 task androidJavadocs(type: Javadoc){
     source = android.sourceSets.main.java.srcDirs
@@ -85,14 +102,13 @@ dependencies {
     implementation(libs.androidx.lifecycle.process)
 }
 
-/*
 def createVersionInformation(defaultConfig) {
     def versionDetails = project.ext.versionDetails
     def version = versionDetails().version
     def lastTag = versionDetails().lastTag
     def gitHash = versionDetails().gitHash
 
-    defaultConfig.resValue "string", "pil_build_info_version", version.toString()
-    defaultConfig.resValue "string", "pil_build_info_tag", lastTag
-    defaultConfig.resValue "string", "pil_build_info_hash", gitHash
-}*/
+    defaultConfig.resValue("string", "voiplib_build_info_version", version.toString())
+    defaultConfig.resValue("string", "voiplib_build_info_tag", lastTag)
+    defaultConfig.resValue("string", "voiplib_build_info_hash", gitHash)
+}
