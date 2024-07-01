@@ -19,22 +19,6 @@ android {
             createVersionInformation(defaultConfig)
         }
     }
-
-    /*buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            consumerProguardFiles 'consumer-rules.pro'
-        }
-    }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = '1.8'
-    }*/
-
 }
 
 afterEvaluate {
@@ -45,8 +29,28 @@ afterEvaluate {
 
                 groupId = "com.github.devmt-eng"
                 artifactId = "VoipSDKAndroid"
+                version = "1.0.32"
 
-                version = "1.0.31"
+                pom.withXml {
+                    def dependenciesNode = asNode().appendNode('dependencies')
+                    configurations.getByName('releaseImplementation').getResolvedConfiguration().getFirstLevelModuleDependencies().each { dep ->
+                        def dependencyNode = dependenciesNode.appendNode('dependency')
+                        dependencyNode.appendNode('groupId', dep.moduleGroup)
+                        dependencyNode.appendNode('artifactId', dep.moduleName)
+                        dependencyNode.appendNode('version', dep.moduleVersion)
+                    }
+                }
+            }
+        }
+
+        repositories {
+            maven {
+                name = "GitHubPackages"
+                url = uri("https://maven.pkg.github.com/devmt-eng/VoipSDKAndroid")
+                credentials {
+                    username = "devmt-eng"
+                    password = "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"
+                }
             }
         }
     }
