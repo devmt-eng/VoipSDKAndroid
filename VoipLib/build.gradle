@@ -20,7 +20,7 @@ android {
         }
     }
 
-    buildTypes {
+    /*buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -33,20 +33,9 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
-    }
+    }*/
+
 }
-
-/*afterEvaluate {
-    android.libraryVariants.each { variant->
-        publishing.publications.create(variant.name, MavenPublication) {
-            from components.findByName(variant.name)
-
-            groupId = "com.github.devmt-eng"
-            artifactId = "VoipSDKAndroid"
-            version= "1.0.28"
-        }
-    }
-}*/
 
 afterEvaluate {
     publishing {
@@ -56,6 +45,8 @@ afterEvaluate {
 
                 groupId = "com.github.devmt-eng"
                 artifactId = "VoipSDKAndroid"
+
+                version = "1.0.31"
             }
         }
     }
