@@ -36,7 +36,7 @@ android {
     }
 }
 
-afterEvaluate {
+/*afterEvaluate {
     android.libraryVariants.each { variant->
         publishing.publications.create(variant.name, MavenPublication) {
             from components.findByName(variant.name)
@@ -44,6 +44,20 @@ afterEvaluate {
             groupId = "com.github.devmt-eng"
             artifactId = "VoipSDKAndroid"
             version= "1.0.28"
+        }
+    }
+}*/
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from(components.release)
+
+                groupId = "com.github.devmt-eng"
+                artifactId = "VoipSDKAndroid"
+                version = "1.0.29"
+            }
         }
     }
 }
