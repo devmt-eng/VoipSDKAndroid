@@ -40,25 +40,8 @@ publishing {
             }
             groupId "com.github.devmt-eng"
             artifactId "VoipSDKAndroid"
-            version "1.0.17"
+            version "1.0.18"
 
-            pom {
-                name = 'VoipLib'
-                description = 'A description of your library'
-                url = 'https://github.com/devmt-eng/VoipSDKAndroid/'
-
-                licenses {
-                    license {
-                        name = 'The Apache License, Version 2.0'
-                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                    }
-                }
-                scm {
-                    connection = 'scm:git:github.com/devmt-eng/VoipSDKAndroid.git'
-                    developerConnection = 'scm:git:ssh://github.com/devmt-eng/VoipSDKAndroid.git'
-                    url = 'https://github.com/devmt-eng/VoipSDKAndroid/'
-                }
-            }
         }
     }
 }
