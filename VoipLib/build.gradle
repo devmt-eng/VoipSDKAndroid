@@ -29,27 +29,17 @@ afterEvaluate {
 
                 groupId = "com.github.devmt-eng"
                 artifactId = "VoipSDKAndroid"
-                version = "1.0.34"
+                version = "1.0.36"
 
-                pom.withXml {
+                /*pom.withXml {
                     def dependenciesNode = asNode().appendNode('dependencies')
-                    configurations.getByName('releaseImplementation').getResolvedConfiguration().getFirstLevelModuleDependencies().each { dep ->
+                    configurations.getByName('runtimeClasspath').getResolvedConfiguration().getFirstLevelModuleDependencies().each { dep ->
                         def dependencyNode = dependenciesNode.appendNode('dependency')
                         dependencyNode.appendNode('groupId', dep.moduleGroup)
                         dependencyNode.appendNode('artifactId', dep.moduleName)
                         dependencyNode.appendNode('version', dep.moduleVersion)
                     }
-                }
-            }
-        }
-
-        repositories {
-            maven {
-                url = uri("https://maven.pkg.github.com/devmt-eng/VoipSDKAndroid")
-                credentials {
-                    username = "devmt-eng"
-                    password = "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"
-                }
+                }*/
             }
         }
     }
